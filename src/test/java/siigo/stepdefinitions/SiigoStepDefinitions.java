@@ -3,16 +3,22 @@ package siigo.stepdefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import net.serenitybdd.model.environment.ConfiguredEnvironment;
+import net.serenitybdd.rest.SerenityRest;
+import net.thucydides.model.util.EnvironmentVariables;
 import siigo.pages.SiigoCreateCustomerPage;
 import siigo.pages.SiigoCustomerViewPage;
 import siigo.pages.SiigoHomePage;
 import siigo.pages.SiigoLoginPage;
 
+import java.util.Date;
 import java.util.List;
 import static org.junit.Assert.*;
 
 
 public class SiigoStepDefinitions {
+
+    EnvironmentVariables variables = ConfiguredEnvironment.getEnvironmentVariables();
 
     SiigoLoginPage siigoLoginPage;
     SiigoHomePage siigoHomePage;
@@ -26,7 +32,7 @@ public class SiigoStepDefinitions {
 
     @Given("User logins into the application")
     public void actorLoginsIntoSiigoApplication() {
-        siigoLoginPage.loginIntoApplication("retoautomationsiigo@yopmail.com", "T4b4ck0ff1c3P455w0rd658*");
+        siigoLoginPage.loginIntoApplication(variables.getProperty("siigo.username"), variables.getProperty("siigo.password"));
     }
 
     @When("User clicks the create customer option")
@@ -45,10 +51,10 @@ public class SiigoStepDefinitions {
         siigoCreateCustomerPage.selectType(type);
     }
 
-    @When("User select {string} as identification type and enter the value {int}")
-    public void userSelectASIdentificationType(String identificationType, int identification) {
+    @When("User select {string} as identification type and enter the value")
+    public void userSelectASIdentificationType(String identificationType) {
         siigoCreateCustomerPage.selectIdentificationType(identificationType);
-        siigoCreateCustomerPage.enterIdentification(identification);
+        siigoCreateCustomerPage.enterIdentification(new Date().getTime());
     }
 
     @When("User enter the value {int} as branch code")
@@ -109,4 +115,8 @@ public class SiigoStepDefinitions {
         siigoCustomerViewPage.validateIdentificationIsPresent();
     }
 
+    @Given("User requests data from {string}")
+    public void userRequestsDataFrom(String path) {
+        SerenityRest.given().get(path).then().statusCode(200);
+    }
 }

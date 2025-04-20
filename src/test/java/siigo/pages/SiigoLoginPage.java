@@ -13,13 +13,6 @@ public class SiigoLoginPage extends BasePage {
     public static final By SUBMIT_BUTTON =  By.id("login-submit");
 
     public void loginIntoApplication(String userName, String password) {
-        synchronized(getDriver()) {
-            try {
-                getDriver().wait(6000); // Waits for 5 seconds
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
         waitForRenderedElementsToBePresent(USER_NAME_INPUT);
         sendKeysToElement(USER_NAME_INPUT, QUERY_SELECTOR_INPUT, userName);
         sendKeysToElement(PASSWORD_INPUT, QUERY_SELECTOR_INPUT, password);

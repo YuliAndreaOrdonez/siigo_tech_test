@@ -62,13 +62,6 @@ public class SiigoCreateCustomerPage extends BasePage {
     }
 
     public void waitUntilPageLoad() {
-        synchronized(getDriver()) {
-            try {
-                getDriver().wait(6000); // Waits for 5 seconds
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
         waitForRenderedElements(CONTAINER);
     }
 
@@ -92,7 +85,7 @@ public class SiigoCreateCustomerPage extends BasePage {
         selectValueInDropdown(IDENTIFICATION_TYPE_DROPDOWN, DIV_ELEMENT, identificationTypes.get(identificationType));
     }
 
-    public void enterIdentification(int identification) {
+    public void enterIdentification(Long identification) {
         sendKeysToElement(IDENTIFICATION_INPUT, INPUT_ELEMENT, String.valueOf(identification));
     }
 

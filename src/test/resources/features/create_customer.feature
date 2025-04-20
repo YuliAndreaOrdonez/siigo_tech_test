@@ -11,7 +11,7 @@ Feature: Create Customer
     |Proveedores|
     |Otros|
     And User select "Persona" as type
-    And User select "Cedula de Ciudadania" as identification type and enter the value 123456789
+    And User select "Cedula de Ciudadania" as identification type and enter the value
     And User enter the value 1 as branch code
     And User enter the value "Yuli" as name
     And User enter the value "Ordoñez" as last name
